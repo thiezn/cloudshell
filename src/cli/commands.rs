@@ -70,59 +70,6 @@ pub(crate) async fn run() -> Result<()> {
                 .await?;
             println!("{}", environment.environment_id);
         }
-        Commands::CreateAndConnect {
-            vpc_id,
-            subnet_id,
-            security_group_id,
-            timeout,
-        } => {
-            let client = CloudShellClient::new_with_aws_config(aws_config.clone())?;
-            let timeout = Duration::from_secs(timeout);
-            let profile_settings = selected_profile_settings(&config, profile.as_deref());
-            let vpc_id = vpc_id.or_else(|| profile_vpc_id(profile_settings));
-            let subnet_ids = subnet_id
-                .map(|subnet_id| vec![subnet_id])
-                .or_else(|| profile_settings.and_then(|settings| settings.subnet_ids.clone()))
-                .unwrap_or_default();
-            let security_group_ids = security_group_id
-                .map(|security_group_id| vec![security_group_id])
-                .or_else(|| {
-                    profile_settings.and_then(|settings| settings.security_group_ids.clone())
-                })
-                .unwrap_or_default();
-            let vpc_config = match (vpc_id, subnet_ids, security_group_ids) {
-                (None, subnet_ids, security_group_ids)
-                    if subnet_ids.is_empty() && security_group_ids.is_empty() =>
-                {
-                    None
-                }
-                (Some(vpc_id), subnet_ids, security_group_ids)
-                    if !subnet_ids.is_empty() && !security_group_ids.is_empty() =>
-                {
-                    Some(VpcConfig {
-                        vpc_id,
-                        subnet_ids,
-                        security_group_ids,
-                    })
-                }
-                _ => {
-                    bail!(
-                        "VPC creation requires a VPC ID, subnet IDs, and security group IDs from flags or profile config"
-                    )
-                }
-            };
-            let environment = client
-                .create_environment_with_options_and_wait_until_running(
-                    &CreateEnvironmentOptions {
-                        environment_name: None,
-                        vpc_config,
-                    },
-                    timeout,
-                )
-                .await?;
-            println!("Created and running {}", environment.environment_id);
-            client.connect(&environment.environment_id, timeout).await?;
-        }
         Commands::Vpc => {
             let lookup = VpcLookup::new_with_aws_config(aws_config.clone())?;
             for vpc in lookup.list_vpcs().await? {

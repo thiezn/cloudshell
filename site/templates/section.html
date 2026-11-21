@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}{{ section.title }} · {{ config.title }}{% endblock title %}
+{% block description %}{{ section.description | default(value=config.description) }}{% endblock description %}
+{% block content %}
+<main class="section-page wrap" id="main">
+    <p class="eyebrow">CloudShell docs</p>
+    <h1>{{ section.title }}</h1>
+    <p class="lede">{{ section.description }}</p>
+    <div class="section-links">
+        {% for doc in section.pages %}
+        <a href="{{ doc.permalink }}"><span>{{ loop.index }}</span>
+            <div>
+                <h2>{{ doc.title }}</h2>
+                <p>{{ doc.description }}</p>
+            </div><span class="link-arrow" aria-hidden="true">&#8594;</span>
+        </a>
+        {% endfor %}
+    </div>
+</main>
+{% endblock content %}

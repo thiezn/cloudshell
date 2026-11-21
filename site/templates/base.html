@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{{ config.title }}{% endblock title %}</title>
+    <meta name="description" content="{% block description %}{{ config.description }}{% endblock description %}">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#fbfbfa" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#111416" media="(prefers-color-scheme: dark)">
+    <link rel="icon" href="{{ get_url(path='favicon.svg') }}" type="image/svg+xml">
+    <link rel="stylesheet" href="{{ get_url(path='main.css') }}">
+    <script>
+        (() => {
+            let theme;
+            try { theme = localStorage.getItem('theme'); } catch (_) { }
+            if (theme !== 'light' && theme !== 'dark') {
+                theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            }
+            document.documentElement.dataset.theme = theme;
+        })();
+    </script>
+</head>
+
+<body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="topbar">
+        <div class="topbar-inner">
+            <a class="brand" href="{{ get_url(path='') }}">
+                <img src="{{ get_url(path='favicon.svg') }}" width="28" height="28" alt="">
+                <span>cloudshell</span>
+            </a>
+            <nav class="topnav" id="primary-nav" aria-label="Primary navigation">
+                <a href="{{ get_url(path='docs/getting-started/') }}">Docs</a>
+                <a href="{{ config.extra.repo }}">GitHub</a>
+            </nav>
+            <div class="toolbar">
+                <button class="icon-button" id="theme-toggle" type="button" aria-label="Switch color theme"
+                    title="Switch color theme">
+                    <svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="12" cy="12" r="4" />
+                        <path
+                            d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" />
+                    </svg>
+                    <svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M20.2 15.1A8.5 8.5 0 0 1 8.9 3.8 8.5 8.5 0 1 0 20.2 15.1Z" />
+                    </svg>
+                </button>
+                <button class="menu-button" id="menu-toggle" type="button" aria-controls="primary-nav"
+                    aria-expanded="false">Menu</button>
+            </div>
+        </div>
+    </header>
+    {% block content %}{% endblock content %}
+    <footer class="footer">
+        <div class="footer-inner">
+            <p><strong>CloudShell</strong> is an unofficial project and is not affiliated with or endorsed by Amazon Web
+                Services.</p>
+            <a href="{{ config.extra.repo }}">Source on GitHub</a>
+        </div>
+    </footer>
+    <script src="{{ get_url(path='js/site.js') }}" defer></script>
+</body>
+
+</html>

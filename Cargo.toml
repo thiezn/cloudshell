@@ -2,12 +2,22 @@
 name = "cloudshell"
 version = "0.1.0"
 edition = "2024"
+authors = ["thiezn"]
+license = "MIT"
+repository = "https://github.com/thiezn/cloudshell"
+homepage = "https://thiezn.github.io/cloudshell/"
+description = "Rust library and CLI implementing the AWS CloudShell APIs"
+keywords = ["aws", "cloudshell"]
+categories = ["network-programming"]
+readme = "README.md"
+
 
 [lints.clippy]
 unwrap_used = "warn"
 expect_used = "warn"
 panic = "warn"
 uninlined_format_args = "warn"
+unsafe_code = "forbid"
 
 [dependencies]
 anyhow = "1"
