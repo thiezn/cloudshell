@@ -1,18 +1,25 @@
 use super::args::{Cli, Commands};
 use super::config::{CliConfig, ProfileSettings};
-use super::credentials::load_aws_config;
 use anyhow::{Context, Result, bail};
 use clap::Parser;
 use cloudshell::{CloudShellClient, CreateEnvironmentOptions, VpcConfig, VpcLookup};
-use std::env;
 use std::time::Duration;
+use std::{env, path::PathBuf};
 
 pub(crate) async fn run() -> Result<()> {
     let cli = Cli::parse();
     let config = CliConfig::load()?;
     let profile = resolve_profile(cli.profile, &config);
     let region = resolve_region(cli.region, &config);
-    let aws_config = load_aws_config(profile.as_deref(), region.as_deref()).await?;
+    let credentials_path = env::var_os("HOME")
+        .map(PathBuf::from)
+        .map(|home| home.join(".cloudshell/credentials"));
+    let aws_config = cloudshell::load_aws_config_with_cache(
+        profile.as_deref(),
+        region.as_deref(),
+        credentials_path.as_deref(),
+    )
+    .await?;
 
     match cli.command {
         Commands::List => {

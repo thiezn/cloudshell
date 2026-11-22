@@ -140,7 +140,9 @@ impl CloudShellClient {
         }
 
         let status = self.get_environment_status(environment_id).await?;
-        if status.status.eq_ignore_ascii_case("SUSPENDED") {
+        if status.status.eq_ignore_ascii_case("SUSPENDED")
+            || status.status.eq_ignore_ascii_case("STOPPED")
+        {
             self.start_environment(environment_id).await?;
         }
         if !status.status.eq_ignore_ascii_case("RUNNING") {

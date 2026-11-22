@@ -7,10 +7,10 @@ use aws_smithy_types::{DateTime, date_time::Format};
 use serde::{Deserialize, Serialize};
 use std::{
     collections::HashMap,
-    env, fmt, fs,
+    fmt, fs,
     fs::OpenOptions,
     io::Write,
-    path::PathBuf,
+    path::{Path, PathBuf},
     time::{Duration, SystemTime},
 };
 use tokio::sync::Mutex;
@@ -37,13 +37,6 @@ struct CredentialStore {
 }
 
 impl CredentialStore {
-    fn for_home() -> Option<Self> {
-        let home = env::var_os("HOME")?;
-        Some(Self {
-            path: PathBuf::from(home).join(".cloudshell/credentials"),
-        })
-    }
-
     fn load_profile(&self, profile: &str) -> Result<Option<Credentials>> {
         let file = self.read_and_prune()?;
         let Some(stored) = file.profiles.get(profile) else {
@@ -155,11 +148,14 @@ impl CredentialStore {
     }
 }
 
-pub(crate) async fn load_aws_config(
+pub async fn load_aws_config_with_cache(
     profile: Option<&str>,
     region: Option<&str>,
+    credentials_path: Option<&Path>,
 ) -> Result<aws_config::SdkConfig> {
-    let store = CredentialStore::for_home();
+    let store = credentials_path.map(|path| CredentialStore {
+        path: path.to_path_buf(),
+    });
     let cached = match (profile, store.as_ref()) {
         (Some(profile), Some(store)) => store.load_profile(profile)?,
         _ => None,

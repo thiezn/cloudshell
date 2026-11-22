@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 218" role="img" aria-labelledby="title desc">
+    <title id="title">CloudShell connection flow</title>
+    <desc id="desc">The cloudshell CLI calls AWS APIs to manage an environment, then uses the Session Manager bridge to open an interactive shell.</desc>
+    <rect x="18" y="35" width="248" height="132" rx="6" fill="#f2f4f3" stroke="#dfe3e1"/>
+    <rect x="356" y="35" width="248" height="132" rx="6" fill="#f2f4f3" stroke="#dfe3e1"/>
+    <rect x="694" y="35" width="248" height="132" rx="6" fill="#f2f4f3" stroke="#dfe3e1"/>
+    <path d="M274 101h67m0 0-7-6m7 6-7 6M612 101h67m0 0-7-6m7 6-7 6" fill="none" stroke="#9aa39e" stroke-width="1.5"/>
+    <circle cx="56" cy="72" r="17" fill="#b7410e"/>
+    <path d="m49 66 7 6-7 6m11 0h8" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/>
+    <text x="84" y="77" fill="#171b19" font-family="Avenir Next, Avenir, sans-serif" font-size="15" font-weight="700">CloudShell CLI</text>
+    <text x="38" y="119" fill="#59615d" font-family="Avenir Next, Avenir, sans-serif" font-size="12">Rust client + AWS credentials</text>
+    <text x="38" y="140" fill="#818a85" font-family="Avenir Next, Avenir, sans-serif" font-size="11">list · create · connect · lifecycle</text>
+    <path d="M392 89c0-10 8-18 18-18 5-11 20-14 29-5 11-2 21 7 21 18h5c8 0 14 6 14 14s-6 14-14 14h-58c-8 0-15-6-15-14 0-4 0-7 0-9Z" fill="#fff" stroke="#b7410e" stroke-width="1.5"/>
+    <text x="484" y="93" fill="#171b19" font-family="Avenir Next, Avenir, sans-serif" font-size="14" font-weight="700">AWS APIs</text>
+    <text x="376" y="139" fill="#59615d" font-family="Avenir Next, Avenir, sans-serif" font-size="12">Environment control plane</text>
+    <rect x="730" y="62" width="38" height="38" rx="5" fill="#fff" stroke="#b7410e" stroke-width="1.5"/>
+    <path d="M738 74h22m-22 8h22m-22 8h14" stroke="#b7410e" stroke-linecap="round" stroke-width="1.5"/>
+    <text x="781" y="78" fill="#171b19" font-family="Avenir Next, Avenir, sans-serif" font-size="14" font-weight="700">CloudShell</text>
+    <text x="781" y="98" fill="#59615d" font-family="Avenir Next, Avenir, sans-serif" font-size="12">environment</text>
+    <text x="714" y="139" fill="#59615d" font-family="Avenir Next, Avenir, sans-serif" font-size="12">Interactive session bridge</text>
+</svg>

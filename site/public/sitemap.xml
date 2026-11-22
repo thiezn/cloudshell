@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://thiezn.github.io/cloudshell/</loc>
+    </url>
+    <url>
+        <loc>https://thiezn.github.io/cloudshell/docs/</loc>
+    </url>
+    <url>
+        <loc>https://thiezn.github.io/cloudshell/docs/cli/</loc>
+    </url>
+    <url>
+        <loc>https://thiezn.github.io/cloudshell/docs/configuration/</loc>
+    </url>
+    <url>
+        <loc>https://thiezn.github.io/cloudshell/docs/getting-started/</loc>
+    </url>
+    <url>
+        <loc>https://thiezn.github.io/cloudshell/docs/library/</loc>
+    </url>
+    <url>
+        <loc>https://thiezn.github.io/cloudshell/docs/networking/</loc>
+    </url>
+</urlset>
